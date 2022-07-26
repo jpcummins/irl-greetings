@@ -1,0 +1,10 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+
+<% for i in 0..99 do %>
+user_<%= i %>:
+  name: bob
+  password: 123
+  title: test
+  bio: test bio
+<% end %>
