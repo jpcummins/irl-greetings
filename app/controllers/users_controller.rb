@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def is_authorized
-    if @user.password == user_params[:password]
+    if @user.password == user_params[:password] && params[:event_code] == Rails.application.credentials.dig(:event_code)
       cookies[:password] = @user.password
       redirect_to edit_user_url(@user)
       return
@@ -22,8 +22,12 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    if !cookies[:password]
+      redirect_to auth_user_url(@user)
+    end
+
     if !is_me? && params[:greeting] == @user.greeting
-      @meetup = true
+      @relation = Relationship.create(user: User.find_by(password: cookies[:password]), greeted: @user)
     end
   end
 

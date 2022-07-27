@@ -6,8 +6,13 @@
   <% end %>
 
   <div class="my-5">
+    <%= form.label "Event code" %>
+    <%= text_field_tag :event_code, "", autocomplete: "off", autocapitalize: "none", spellcheck: "false", class: "font-mono text-l block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
     <%= form.label :password %>
-    <%= form.text_field :password, autocomplete: "off", autocapitalize: "none", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :password, autocomplete: "off", autocapitalize: "none", spellcheck: "false", class: "font-mono text-l block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="inline">
