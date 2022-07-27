@@ -22,9 +22,8 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    if !is_authorized?
-      redirect_to auth_user_url(@user)
-      return
+    if !is_me? && params[:greeting] == @user.greeting
+      @meetup = true
     end
   end
 
@@ -63,15 +62,15 @@ class UsersController < ApplicationController
     end
 
     def redirect_if_unauthed
-      redirect_to user_url(@user) if !is_authorized?
+      redirect_to user_url(@user) if !is_me?
     end
 
-    def is_authorized?
+    def is_me?
       cookies[:password] == @user.password
     end
 
     def edit_url
-      if is_authorized?
+      if is_me?
         edit_user_path(@user)
       else
         auth_user_path(@user)
@@ -80,7 +79,7 @@ class UsersController < ApplicationController
     helper_method :edit_url
 
     def user_svg(user)
-      @qrcode = RQRCode::QRCode.new("https://fiat.lol/users/#{user.id}")
+      @qrcode = RQRCode::QRCode.new("https://fiat.lol/users/#{user.id}?greeting=#{user.greeting}")
       @qrcode.as_svg(
         offset: 0,
         color: '000',

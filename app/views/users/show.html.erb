@@ -1,5 +1,8 @@
 
   <div class="w-full">
+    <% if @meetup %>
+      <p>meetup</p>
+    <% end %>
     <%= render @user %>
     <%= link_to 'Edit', edit_url, class: "ml-2 mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
