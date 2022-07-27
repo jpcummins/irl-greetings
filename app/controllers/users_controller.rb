@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show auth is_authorized edit update ]
+  before_action :redirect_if_unauthed, only: %i[ edit update ]
 
   # GET /users or /users.json
   def index
@@ -11,7 +12,8 @@ class UsersController < ApplicationController
   end
 
   def is_authorized
-    if @user[:password] == user_params[:password]
+    if @user.password == user_params[:password]
+      cookies[:password] = @user.password
       redirect_to edit_user_url(@user)
       return
     end
@@ -29,28 +31,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @qrcode = RQRCode::QRCode.new("https://fiat.lol/users/#{@user.id}")
-    @svg = @qrcode.as_svg(
-      offset: 0,
-      color: '000',
-      shape_rendering: 'crispEdges',
-      module_size: 6
-    )
-  end
-
-  # POST /users or /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    @svg = user_svg(@user)
   end
 
   # PATCH/PUT /users/1 or /users/1.json
@@ -76,4 +57,32 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :password, :title, :bio, :avatar)
     end
-end
+
+    def redirect_if_unauthed
+      redirect_to user_url(@user) if !is_authorized?
+    end
+
+    def is_authorized?
+      cookies[:password] == @user.password
+    end
+
+    def edit_url
+      if is_authorized?
+        edit_user_path(@user)
+      else
+        auth_user_path(@user)
+      end
+    end
+    helper_method :edit_url
+
+    def user_svg(user)
+      @qrcode = RQRCode::QRCode.new("https://fiat.lol/users/#{user.id}")
+      @qrcode.as_svg(
+        offset: 0,
+        color: '000',
+        shape_rendering: 'crispEdges',
+        module_size: 6
+      )
+    end
+    helper_method :user_svg
+  end

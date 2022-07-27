@@ -1,8 +1,8 @@
 <div id="<%= dom_id user %>" class="flex flex-col w-full">
   <div class="p-4 bg-white shadow-lg rounded-lg my-4">
     <div>
-      <% if user.avatar.attached? %>
-        <img src="<%= url_for(user.avatar) %>" />
+      <% if user.avatar.attached? and user.avatar.representable? %>
+        <%= image_tag user.avatar.representation(resize_to_limit: [400, 400]) %>
       <% end %>
       <h2 class="text-gray-800 text-3xl font-semibold"><%= link_to user.name, user %></h2>
       <p class="mt-2 text-gray-800"><%= user.bio %></p>
@@ -10,5 +10,6 @@
     <div class="flex justify-end mt-4 mr-4">
       <p class="font-medium text-gray-500"><%= user.title %></p>
     </div>
+    <input type="hidden" value="<%= user.password %>" />
   </div>
 </div>

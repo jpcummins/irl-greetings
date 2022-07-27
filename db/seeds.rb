@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+def generate_token
+  loop do
+    token = SecureRandom.urlsafe_base64().tr('-_', '')[0..3].downcase
+    break token unless User.where(password: token).exists?
+  end
+end
+
+for i in 0..9 do
+  User.create(name: 'Bob', password: generate_token).save
+end
