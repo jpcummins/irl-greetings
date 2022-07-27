@@ -1,7 +1,10 @@
 <div class="mx-auto md:w-2/3 w-full">
   <% if @svg %>
-    <div class="mb-4 flex justify-center">
-      <%= @svg.html_safe %>
+    <div class="my-5">
+      <p>QR Code:</p>
+      <div class="mt-2">
+        <%= @svg.html_safe %>
+      </div>
     </div>
   <% end %>
   <%= render "form", user: @user %>

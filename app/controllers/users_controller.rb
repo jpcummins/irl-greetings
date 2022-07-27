@@ -22,6 +22,10 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    if !is_authorized?
+      redirect_to auth_user_url(@user)
+      return
+    end
   end
 
   # GET /users/new
