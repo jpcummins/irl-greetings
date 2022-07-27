@@ -75,3 +75,5 @@ group :test do
 end
 
 gem "rqrcode", "~> 2.1"
+
+gem "aws-sdk-s3", "~> 1.114"
