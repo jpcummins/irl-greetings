@@ -2,7 +2,7 @@
   <div class="p-4 bg-white shadow-lg rounded-lg my-4">
     <div>
       <% if user.avatar.attached? and user.avatar.representable? %>
-        <%= image_tag user.avatar.representation(resize_to_limit: [400, 400]) %>
+        <%= image_tag user.avatar.variant(resize_to_limit: [400, 400]) %>
       <% end %>
       <h2 class="text-gray-800 text-3xl font-semibold"><%= link_to user.name, user %></h2>
       <p class="mt-2 text-gray-800"><%= user.bio %></p>
