@@ -26,13 +26,14 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    #add a security check here
     if !cookies[:password]
       redirect_to auth_user_url(@user)
     end
 
     @me = User.find_by(password: cookies[:password])
 
-    if !is_me? && params[:greeting] == @user.greeting
+    if !is_me? && params[:greeting] == @user.greeting && @user.name
       @relation = Relationship.find_or_create_by(user: @me, greeted: @user)
     end
 

@@ -14,5 +14,5 @@ def generate_token
 end
 
 for i in 0..9 do
-  User.create(name: Faker::Name.name, password: generate_token, greeting: generate_token).save
+  User.create(password: generate_token, greeting: generate_token).save
 end

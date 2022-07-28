@@ -7,7 +7,11 @@
         <% end %>
       </div>
       <div class="p-4">
-        <h2 class="text-gray-800 text-3xl font-semibold"><%= link_to user.name, user %></h2>
+        <% if user.name %>
+          <h2 class="text-gray-800 text-3xl font-semibold"><%= link_to user.name, user %></h2>
+        <% else %>
+          <p class="font-medium text-gray-500">Profile not set up.</p>
+        <% end %>
         <p class="font-medium text-gray-500"><%= user.title %></p>
         <p class="mt-2 text-gray-800"><%= user.bio %></p>
       </div>
