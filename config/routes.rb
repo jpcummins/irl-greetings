@@ -4,6 +4,10 @@ Rails.application.routes.draw do
       get :auth
       post :is_authorized
     end
+
+    collection do
+      get :print
+    end
   end
 
   root 'public#index'

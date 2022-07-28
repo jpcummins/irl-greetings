@@ -11,3 +11,7 @@
 }
 
 */
+
+a {
+  @apply text-blue-800 hover:text-blue-900 transition duration-300 ease-in-out mb-4
+}

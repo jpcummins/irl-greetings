@@ -1,18 +1,26 @@
 <div class="w-full">
   <% if is_me? %>
     <%= link_to 'Edit', edit_url, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <% else %>
+    <%= link_to 'My Profile', @me, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   <% end %>
   <%= render @user %>
   <% if !@user.greeted.empty? %>
-    <h3>People I Greeted (<%= @user.greeted.count %>)</h3>
-    <% @user.greeted.each do |relationship| %>
-      <%= relationship.greeted.name %>
-    <% end %>
-  <% end %>
-  <% if !@user.greeted_me.empty? %>
-    <h3>Who's Greeted Me (<%= @user.greeted_me.count %>)</h3>
-    <% @user.greeted_me.each do |relationship| %>
-      <%= relationship.user.name %>
-    <% end %>
+    <p class="text-gray-500 text-sm mt-8 ml-4"><%= pluralize(@user.greeted.count, 'connection') %></p>
+    <ol class="border-l border-gray-300 m-4">
+      <% @user.greeted.order('created_at desc').each do |relationship| %>
+        <li>
+          <div class="flex flex-start items-center pt-3">
+            <div class="bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3"></div>
+            <p class="text-gray-500 text-sm"><%= time_ago_in_words(relationship.created_at) %> ago</p>
+          </div>
+          <div class="mt-0.5 ml-4 mb-6">
+            <h4 class="font-semibold text-xl"><%= link_to relationship.greeted.name, relationship.greeted %></h4>
+            <p class="text-gray-500 font-semibold"><%= relationship.greeted.title %></p>
+            <p class="text-gray-500 my-3"><%= relationship.greeted.bio %></p>
+          </div>
+        </li>
+      <% end %>
+    </ol>
   <% end %>
 </div>

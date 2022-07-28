@@ -1,0 +1,8 @@
+<div id="users" class="">
+  <% @users.each do |user| %>
+    <div class="inline-block p-5 text-center">
+      <%= user_svg(user).html_safe %>
+      <%= link_to user.password, user, class: "block mt-4 pb-6 font-mono text-2xl font-bold" %>
+    </div>
+  <% end %>
+</div>

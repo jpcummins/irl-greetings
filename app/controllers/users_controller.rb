@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show auth is_authorized edit update ]
-  before_action :redirect_if_unauthed, only: %i[ index edit update ]
+  before_action :redirect_if_unauthed, only: %i[ edit update ]
 
   # GET /users or /users.json
   def index
+  end
+
+  def print
     @users = User.all
+    render(:layout => "layouts/print")
   end
 
   def auth
@@ -26,9 +30,13 @@ class UsersController < ApplicationController
       redirect_to auth_user_url(@user)
     end
 
+    @me = User.find_by(password: cookies[:password])
+
     if !is_me? && params[:greeting] == @user.greeting
-      @relation = Relationship.create(user: User.find_by(password: cookies[:password]), greeted: @user)
+      @relation = Relationship.find_or_create_by(user: @me, greeted: @user)
     end
+
+
   end
 
   # GET /users/new
@@ -93,7 +101,7 @@ class UsersController < ApplicationController
         offset: 0,
         color: '000',
         shape_rendering: 'crispEdges',
-        module_size: 6
+        module_size: 5
       )
     end
     helper_method :user_svg
