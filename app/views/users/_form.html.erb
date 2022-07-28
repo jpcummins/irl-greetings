@@ -10,19 +10,19 @@
     </div>
   <% end %>
   <div class="my-5">
-    <%= form.label :name %>
+    <%= form.label 'Preferred name or pseudonym' %>
     <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
   <div class="my-5">
-    <%= form.label :title %>
+    <%= form.label 'Job title or team (optional)' %>
     <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
   <div class="my-5">
-    <%= form.label :bio %>
+    <%= form.label 'Bio, interesting fact, or introduction' %>
     <%= form.text_field :bio, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
   <div class="my-5">
-    <%= form.label 'Selfie' %>
+    <%= form.label 'Selfie (optional, horizontal orientation works best)' %>
     <% if user.avatar.attached? and user.avatar.representable? %>
       <%= image_tag user.avatar.variant(resize_to_limit: [400, 400]), class: 'rounded-lg mt-2' %>
     <% end %>

@@ -1,12 +1,16 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show auth is_authorized edit update ]
-  before_action :redirect_if_unauthed, only: %i[ edit update ]
+  before_action :set_user, only: %i[ show auth is_authorized edit update print ]
+  before_action :redirect_if_unauthed, only: %i[ edit update print ]
 
   # GET /users or /users.json
   def index
   end
 
   def print
+    if @user.admin != true
+      redirect_to root_url(@user)
+      return
+    end
     @users = User.all
     render(:layout => "layouts/print")
   end
@@ -16,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def is_authorized
-    if @user.password == user_params[:password] && params[:event_code] == Rails.application.credentials.dig(:event_code)
+    if @user.password == user_params[:password].strip && params[:event_code].strip == Rails.application.credentials.dig(:event_code)
       cookies[:password] = @user.password
       redirect_to edit_user_url(@user)
       return
@@ -36,8 +40,6 @@ class UsersController < ApplicationController
     if !is_me? && params[:greeting] == @user.greeting && @user.name
       @relation = Relationship.find_or_create_by(user: @me, greeted: @user)
     end
-
-
   end
 
   # GET /users/new

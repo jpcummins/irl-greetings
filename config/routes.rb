@@ -3,9 +3,6 @@ Rails.application.routes.draw do
     member do
       get :auth
       post :is_authorized
-    end
-
-    collection do
       get :print
     end
   end
