@@ -1,6 +1,8 @@
 <div class="w-full">
+  <% if is_me? %>
+    <%= link_to 'Edit', edit_url, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <% end %>
   <%= render @user %>
-  <%= link_to 'Edit', edit_url, class: "ml-2 mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   <% if !@user.greeted.empty? %>
     <h3>People I Greeted (<%= @user.greeted.count %>)</h3>
     <% @user.greeted.each do |relationship| %>

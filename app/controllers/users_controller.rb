@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show auth is_authorized edit update ]
-  before_action :redirect_if_unauthed, only: %i[ edit update ]
+  before_action :redirect_if_unauthed, only: %i[ index edit update ]
 
   # GET /users or /users.json
   def index
@@ -66,12 +66,17 @@ class UsersController < ApplicationController
     end
 
     def redirect_if_unauthed
-      redirect_to user_url(@user) if !is_me?
+      if @user
+        redirect_to user_url(@user) if !is_me?
+      else
+        redirect_to root_url
+      end
     end
 
     def is_me?
       cookies[:password] == @user.password
     end
+    helper_method :is_me?
 
     def edit_url
       if is_me?
