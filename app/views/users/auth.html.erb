@@ -1,30 +1,27 @@
 <div>
-    <h2 class="font-medium leading-tight text-2xl mt-4 text-blue-600">Hello!, the game.</h2>
-    <p class="mt-2">Compete by meeting people and scanning their QR code. Win prizes.</p>
-
-    <h2 class="font-medium leading-tight text-xl mt-4 text-blue-600">How does this work?</h2>
-    <p class="mt-2">Login with your event code (shared on Slack) and password (folded behind the QR code). Update your profile. Then, meet others and ask to scan their badge.</p>
-
-    <h2 class="font-medium leading-tight text-xl mt-4 text-blue-600">Is this secure?</h2>
-    <p class="mt-2">Presume it's not. Don't share personally identifiable information or company information. All data input is optional.</p>
-    <p class="mt-2">That said, there are numerous security precautions in place:</p>
-    <ul class="list-disc list-inside mt-2">
-        <li>SSL</li>
-        <li>No trackers</li>
-        <li>Javascript optional</li>
-        <li>Must be authenticated to view data, photos, etc</li>
-        <li>Code was statically analized for vulnrabilities, all bugs fixed</li>
-        <li>Open source: <a href="https://github.com/jpcummins/irl-greetings">https://github.com/jpcummins/irl-greetings</a></li>
-        <li>S3 bucket used to store photos is locked down</li>
-        <li>S3 bucket and database will be deleted after the event</li>
-    </ul>
-
-    <h2 class="font-medium leading-tight text-xl mt-6 text-blue-600">Are you ready?</h2>
-    <p class="mt-2">If that didn't scare you away, let the games begin!</p>
-
-
-
-
+  <h2 class="font-medium leading-tight text-2xl mt-4 text-blue-600">Hello!, the game.</h2>
+  <p class="mt-2">Meet people and scan QR codes. Collect them all.</p>
+  <h2 class="font-medium leading-tight text-xl mt-4 text-blue-600">How does this work?</h2>
+  <ol class="list-num list-inside mt-2">
+    <li>Login with the event code (shared when event begins) and four character password</li>
+    <li>Create your profile</li>
+    <li>Take a selfie</li>
+    <li>Meet new people, scan some badges.</li>
+  </ol>
+  <h2 class="font-medium leading-tight text-xl mt-4 text-blue-600">Is this secure?</h2>
+  <p class="mt-2">Presume it's not. Don't share personally identifiable information or company information. All data input is optional.</p>
+  <p class="mt-2">That said, there are numerous security precautions in place:</p>
+  <ul class="list-disc list-inside mt-2">
+    <li>SSL</li>
+    <li>No trackers</li>
+    <li>Javascript optional</li>
+    <li>Authentication required</li>
+    <li>Code passed vulnrability scan</li>
+    <li>Storage is blocked from public access</li>
+    <li>All data will be deleted after the event</li>
+    <li>Open source: <a href="https://github.com/jpcummins/irl-greetings">https://github.com/jpcummins/irl-greetings</a></li>
+  </ul>
+  <h2 class="font-medium leading-tight text-xl mt-6 text-blue-600">Are you ready?</h2>
+  <p class="mt-2">If that didn't scare you away, let the games begin!</p>
 </div>
-
 <%= render "auth", user: @user %>
