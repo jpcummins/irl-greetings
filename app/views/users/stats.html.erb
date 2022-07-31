@@ -1,0 +1,15 @@
+<%= link_to 'My Profile', @user, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+
+<h2 class="text-gray-700 text-lg mt-8 mb-2 font-bold">Most Connections</h2>
+<table>
+    <tr>
+        <th class="text-left">Connections</th>
+        <th class="text-left pl-4">Name</th>
+    </tr>
+<% @connections.each do |connection| %>
+    <tr>
+        <td><p class="text-left"><%= connection[1] %></p></td>
+        <td><p class="text-left pl-4"><%= link_to connection[0].name, connection[0] %></p></td>
+    </tr>
+<% end %>
+</table>

@@ -4,9 +4,17 @@
   <% else %>
     <%= link_to 'My Profile', @me, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   <% end %>
+
+  <% if @me.admin == true %>
+    <%= link_to 'Admin', admin_user_url(@me), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"%>
+  <% end %>
+
+  <%= link_to 'Leaderboard', stats_user_url(@me), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"%>
+
+
   <%= render @user %>
   <% if !@user.greeted.empty? %>
-    <p class="text-gray-500 text-sm mt-8 ml-4"><%= pluralize(@user.greeted.count, 'connection') %></p>
+    <p class="text-gray-700 text-lg mt-8 ml-4 font-bold"><%= pluralize(@user.greeted.count, 'connection') %></p>
     <ol class="border-l border-gray-300 m-4">
       <% @user.greeted.order('created_at desc').each do |relationship| %>
         <li>

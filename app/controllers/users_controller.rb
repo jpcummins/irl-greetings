@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show auth is_authorized edit update print ]
-  before_action :redirect_if_unauthed, only: %i[ edit update print ]
+  before_action :set_user, only: %i[ show auth is_authorized edit update print admin stats ]
+  before_action :redirect_if_unauthed, only: %i[ edit update print admin stats ]
+  before_action :require_admin, only: %i[ admin ]
 
   # GET /users or /users.json
   def index
@@ -13,6 +14,20 @@ class UsersController < ApplicationController
     end
     @users = User.all
     render(:layout => "layouts/print")
+  end
+
+  def admin
+    @users = User.order(updated_at: :desc)
+  end
+
+  def stats
+    # Getting errors with grouping and can't google the answers on the plane
+    # fuck it, doing it the hacky way. Don't judge.
+    connections = Relationship.group('user_id').count
+    sorted_groups = connections.map { |k, v| [k, v] }
+    sorted_groups = sorted_groups.sort { |x, y| x[1] <=> y[1] }.reverse.first(10)
+    @connections = sorted_groups.map { |c| [User.find(c[0]), c[1]]}
+
   end
 
   def auth
@@ -82,6 +97,10 @@ class UsersController < ApplicationController
       else
         redirect_to root_url
       end
+    end
+
+    def require_admin
+      redirect_to user_url(@user) unless is_me? and @user.admin == true
     end
 
     def is_me?

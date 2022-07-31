@@ -1,0 +1,16 @@
+<%= link_to 'My Profile', @user, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+
+<table>
+    <tr>
+        <th class="text-left">Name</th>
+        <th class="text-left pl-4">Password</th>
+        <th class="text-left pl-4">Last update</th>
+    </tr>
+<% @users.each do |user| %>
+    <tr>
+        <td><p class="text-left"><% if user.admin == true %><span class="text-red-500">Admin: <% end %></span><%= link_to user.name, user %> (<%= link_to 'greet', user_path(user, greeting: user.greeting) %>)</p></td>
+        <td><p class="pl-4 text-left"><%= user.password %></p></td>
+        <td><p class="pl-4 text-left text-gray-500 text-sm"><%= time_ago_in_words(user.created_at) %></p></td>
+    </tr>
+<% end %>
+</table>
