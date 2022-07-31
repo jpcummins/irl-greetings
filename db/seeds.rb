@@ -13,6 +13,6 @@ def generate_token
   end
 end
 
-for i in 0..9 do
+for i in 0..99 do
   User.create(password: generate_token, greeting: generate_token).save
 end
