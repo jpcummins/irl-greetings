@@ -23,6 +23,7 @@
             <p class="text-gray-500 text-sm"><%= time_ago_in_words(relationship.created_at) %> ago</p>
           </div>
           <div class="mt-0.5 ml-4 mb-6">
+            <% if relationship.greeted.avatar.url %><%= image_tag relationship.greeted.avatar.variant(resize_to_limit: [200, 200]), class: 'rounded-t-lg min-w-full' %><% end %>
             <h4 class="font-semibold text-xl"><%= link_to relationship.greeted.name, relationship.greeted %></h4>
             <p class="text-gray-500 font-semibold"><%= relationship.greeted.title %></p>
             <p class="text-gray-500 my-3"><%= relationship.greeted.bio %></p>
