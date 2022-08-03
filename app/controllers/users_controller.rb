@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def slideshow
-    @users = User.all
+    @users = User.all.order("random()")
     render(:layout => "layouts/slideshow")
   end
 
