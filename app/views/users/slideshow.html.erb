@@ -10,10 +10,10 @@
             <% if user.name %>
             <h2 class="text-white text-3xl font-semibold"><%= user.title %></h2>
             <% else %>
-            <p class="font-medium text-gray-300">Profile not set up.</p>
+            <p class="font-medium text-xl text-gray-300">Profile not set up.</p>
             <% end %>
-            <p class="font-medium text-gray-300"><%= user.title %></p>
-            <p class="mt-2 text-gray-300"><%= user.bio %></p>
+            <p class="font-medium text-xl text-gray-300"><%= user.title %></p>
+            <p class="mt-2 text-3xl  text-gray-300"><%= user.bio %></p>
         </div>
         <%= image_tag user.avatar, css: 'object-fill' %>
     </div>
