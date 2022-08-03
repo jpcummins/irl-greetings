@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show auth is_authorized edit update print admin stats ]
-  before_action :redirect_if_unauthed, only: %i[ edit update print admin stats ]
-  before_action :require_admin, only: %i[ admin ]
+  before_action :set_user, only: %i[ show auth is_authorized edit update print admin stats slideshow ]
+  before_action :redirect_if_unauthed, only: %i[ edit update print admin stats slideshow ]
+  before_action :require_admin, only: %i[ admin slideshow ]
 
   # GET /users or /users.json
   def index
@@ -18,6 +18,11 @@ class UsersController < ApplicationController
 
   def admin
     @users = User.order(updated_at: :desc)
+  end
+
+  def slideshow
+    @users = User.all
+    render(:layout => "layouts/slideshow")
   end
 
   def stats

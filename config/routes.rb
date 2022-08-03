@@ -6,6 +6,10 @@ Rails.application.routes.draw do
       get :print
       get :admin
       get :stats
+      get :slideshow
+    end
+
+    collection do
     end
   end
 

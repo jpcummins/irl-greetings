@@ -1,0 +1,46 @@
+
+
+
+<div class="my-slider">
+<% @users.each do |user| %>
+    <% if user.avatar.url %>
+    <div class="slide w-screen h-screen flex justify-center hidden relative">
+
+        <div class="absolute inset-x-0 bottom-0 text-center bg-black/80 py-4">
+            <% if user.name %>
+            <h2 class="text-gray-800 text-3xl font-semibold"><%= link_to user.name, user %></h2>
+            <% else %>
+            <p class="font-medium text-gray-300">Profile not set up.</p>
+            <% end %>
+            <p class="font-medium text-gray-300"><%= user.title %></p>
+            <p class="mt-2 text-gray-300"><%= user.bio %></p>
+        </div>
+        <%= image_tag user.avatar, css: 'object-fill' %>
+    </div>
+    <% end %>
+<% end %>
+</div>
+
+
+<script>
+
+window.onload = () => {
+    if (!window.jQuery) {
+        return;
+    }
+    const $images = $('.slide');
+    let $image = $images.first();
+
+    setInterval(() => {
+        $image.addClass('hidden');
+        $image = $image.next();
+        console.log($image)
+        if (!$image.length) {
+            $image = $images.first();
+        }
+        $image.removeClass('hidden');
+   }, 4000);
+}
+
+
+</script>

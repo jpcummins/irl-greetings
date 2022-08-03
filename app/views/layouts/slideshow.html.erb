@@ -7,14 +7,12 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
     <%= javascript_importmap_tags %>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
-  <body class="bg-gray-200">
-      <div class="container mx-auto max-w-xl px-4">
-        <div class="mt-6">
-          <%= yield %>
-        </div>
+  <body>
+      <div class="w-screen h-screen bg-slate-900">
+        <%= yield %>
       </div>
   </body>
 </html>
