@@ -8,7 +8,7 @@
 
         <div class="absolute inset-x-0 bottom-0 text-center bg-black/80 py-4">
             <% if user.name %>
-            <h2 class="text-white text-3xl font-semibold"><%= link_to user.name, user %></h2>
+            <h2 class="text-white text-3xl font-semibold"><%= user.title %></h2>
             <% else %>
             <p class="font-medium text-gray-300">Profile not set up.</p>
             <% end %>
