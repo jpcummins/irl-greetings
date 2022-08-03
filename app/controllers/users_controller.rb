@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show auth is_authorized edit print admin stats ]
-  before_action :redirect_if_unauthed, only: %i[ edit print admin stats ]
+  before_action :set_user, only: %i[ show auth is_authorized edit update print admin stats ]
+  before_action :redirect_if_unauthed, only: %i[ edit update print admin stats ]
   before_action :require_admin, only: %i[ admin ]
 
   # GET /users or /users.json
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def is_authorized
     if @user.password == user_params[:password].strip && params[:event_code].strip == Rails.application.credentials.dig(:event_code)
-      cookies[:password] = { value: @user.password, expires: 1.year }
+      cookies[:password2] = { value: @user.password, expires: 1.year }
       redirect_to edit_user_url(@user)
       return
     end
@@ -46,11 +46,11 @@ class UsersController < ApplicationController
   # GET /users/1 or /users/1.json
   def show
     #add a security check here
-    if !cookies[:password]
+    if !cookies[:password2]
       redirect_to auth_user_url(@user)
     end
 
-    @me = User.find_by(password: cookies[:password])
+    @me = User.find_by(password: cookies[:password2])
 
     if !is_me? && params[:greeting] == @user.greeting && @user.name
       @relation = Relationship.find_or_create_by(user: @me, greeted: @user)
@@ -65,6 +65,19 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @svg = user_svg(@user)
+  end
+
+  # PATCH/PUT /users/1 or /users/1.json
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
@@ -91,7 +104,7 @@ class UsersController < ApplicationController
     end
 
     def is_me?
-      cookies[:password] == @user.password
+      cookies[:password2] == @user.password
     end
     helper_method :is_me?
 
