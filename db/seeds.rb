@@ -14,5 +14,5 @@ def generate_token
 end
 
 for i in 0..99 do
-  User.create(name: '' password: generate_token, greeting: generate_token).save
+  User.create(name: '', password: generate_token, greeting: generate_token).save
 end
