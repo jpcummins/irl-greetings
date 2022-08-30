@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   def is_authorized
     if @user.password == user_params[:password].strip && params[:event_code].strip == Rails.application.credentials.dig(:event_code)
-      cookies[:password2] = { value: @user.password, expires: 1.year }
+      cookies[:password] = { value: @user.password, expires: 1.week }
       redirect_to edit_user_url(@user)
       return
     end
@@ -51,11 +51,11 @@ class UsersController < ApplicationController
   # GET /users/1 or /users/1.json
   def show
     #add a security check here
-    if !cookies[:password2]
+    if !cookies[:password]
       redirect_to auth_user_url(@user)
     end
 
-    @me = User.find_by(password: cookies[:password2])
+    @me = User.find_by(password: cookies[:password])
 
     if !is_me? && params[:greeting] == @user.greeting && @user.name
       @relation = Relationship.find_or_create_by(user: @me, greeted: @user)
@@ -109,7 +109,7 @@ class UsersController < ApplicationController
     end
 
     def is_me?
-      cookies[:password2] == @user.password
+      cookies[:password] == @user.password
     end
     helper_method :is_me?
 
